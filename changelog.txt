@@ -1,6 +1,9 @@
 A04 (08.09.2022):
 ================
 - added edl parsing capabilities
+- added multiple selection to search entries
+- changed label to barcode in volume view
+- added relocate path
 
 A03:
 ======
