@@ -1,0 +1,10 @@
+[GENERAL]
+nsdchat = /usr/local/aw/bin/nsdchat
+awsock = -s awsock:/admin:admin.@172.100.10.40:9001
+
+[RESTORE]
+archive_id = 10003
+
+[NOTIFICATION]
+email = pbuchinger@toolsatwork.com
+
