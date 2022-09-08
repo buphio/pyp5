@@ -1,13 +1,13 @@
-import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
+from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
-import os
 import configparser
 import datetime as dt
-import pyp5
+import os
 import postbote
+import pyp5
+import tkinter as tk
 
 
 __version__ = 'A04'
@@ -21,7 +21,7 @@ class RestoreGUI(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        # === VARIABLES ===
+        # === VARIABLES ==================================================================
         self.title(f'p5restore - {__version__}')
         self.resizable(False, False)
         self.grid_columnconfigure(0, weight=1, minsize='800')
@@ -32,9 +32,11 @@ class RestoreGUI(tk.Tk):
         self.sum_entries = 0
         self.config_file = f"{os.path.expanduser('~')}/.pyp5conf"
 
+        self.selected_items = set()
+
         self.bug_report_text = tk.Text()
 
-        # === GUI ===
+        # === GUI ========================================================================
         frame_main = tk.Frame(self)
         frame_main.grid(column=0, row=0, padx=10, pady=(10, 5), sticky=tk.NSEW)
         frame_main.grid_rowconfigure(2, weight=1)
@@ -48,7 +50,7 @@ class RestoreGUI(tk.Tk):
         frame_10 = tk.Frame(frame_main, background='light blue')
         frame_10.grid(row=1, column=0, columnspan=4, sticky=tk.NSEW)
         frame_10.grid_columnconfigure(0, weight=1)
-        self.list_entries = tk.Listbox(frame_10, border=0, width=60, height=20)
+        self.list_entries = tk.Listbox(frame_10, border=0, width=60, height=20, selectmode='multiple')
         self.list_entries.configure(font=('Andale Mono', 14))
         self.list_entries.grid(column=0, row=0, sticky=tk.W)
         self.scrollbar_list_entries = tk.Scrollbar(frame_10, orient='vertical', command=self.list_entries.yview())
@@ -159,6 +161,7 @@ class RestoreGUI(tk.Tk):
         def bug_report(event=None):
             BugReport(self)
 
+        # --- BUG REPORT
         frame_64 = tk.Frame(frame_main)
         frame_64.grid(row=6, column=4, padx=(10, 0), sticky=tk.NSEW)
         frame_64.grid_columnconfigure(0, weight=1)
@@ -175,6 +178,7 @@ class RestoreGUI(tk.Tk):
         self.config_load()
         self.config_print()
 
+    # === FUNCTIONS ======================================================================
     def archive_id_changed(self, event):
         self.config_change(self.combobox_archvive_id.get())
 
@@ -197,6 +201,11 @@ class RestoreGUI(tk.Tk):
             self.text_config.insert(tk.END, f'[{section_name}]\n')
             for name, value in self.config_parser.items(section_name):
                 self.text_config.insert(tk.END, f'{name}={value}\n')
+                if name == 'archive_id':
+                    if value == '10003':
+                        self.combobox_archvive_id.set('Archiv_p5')
+                    elif value == '10004':
+                        self.combobox_archvive_id.set('Axle')
             self.text_config.insert(tk.END, '\n')
 
     def config_change(self, selected_index):
@@ -262,12 +271,20 @@ class RestoreGUI(tk.Tk):
         self.label_file.config(text=f"Current file: '{self.selected_file}'")
 
     def restore(self):
+        search_items = list()
+
+        # self.selected_items = self.list_entries.curselection()
+        self.text_log_output.delete('1.0', tk.END)
+
+        for i in self.list_entries.curselection():
+            search_items.append(self.list_entries.get(i).strip())
+
         archive_id = self.config_parser.get('RESTORE', 'archive_id')
         nsdchat = [self.config_parser.get('GENERAL', 'nsdchat')] + self.config_parser.get('GENERAL', 'awsock').split()
 
         # are there any items to search?
-        if not self.list_entries.get(0):
-            self.text_log_output.insert(tk.END, f'[{get_time()}] ERROR: no search items.\n')
+        if len(search_items) == 0:
+            self.text_log_output.insert(tk.END, f'[{get_time()}] ERROR: no search items selected.\n')
             return
 
         # check connection
@@ -286,7 +303,7 @@ class RestoreGUI(tk.Tk):
         self.text_log_output.insert(tk.END, f'[{get_time()}] INFO: Restoring from archive id {archive_id}\n\n')
 
         # --- search for entries and add to restore selection
-        for item in self.list_entries.get(0, tk.END):
+        for item in search_items:
             self.update()
             result = pyp5.find_entry(nsdchat, restore_selection, archive_id, item.strip()).strip("\n")
             if result == '0' or not result:
@@ -313,8 +330,9 @@ class RestoreGUI(tk.Tk):
         self.text_log_output.insert(tk.END, f'\n[{get_time()}] INFO: Volumes needed for restore:\n')
         for volume in sorted(volumes_list):
             self.update()
-            label = pyp5.get_label(nsdchat, volume).strip("\n")
-            self.text_log_output.insert(tk.END, f'[{get_time()}] {volume}: {label}\n')
+            # label = pyp5.get_label(nsdchat, volume).strip("\n")
+            barcode = pyp5.get_barcode(nsdchat, volume).strip("\n")
+            self.text_log_output.insert(tk.END, f'[{get_time()}] {volume}: {barcode}\n')
 
         title = pyp5.describe(nsdchat, restore_selection, os.path.basename(self.selected_file))
 
@@ -381,7 +399,7 @@ class BugReport(tk.Tk):
         message = self.bug_report_text.get('1.0', tk.END)
         if "".join(message.split()):
             message = message + '\n\n--------------------\n\n' + self.text_log_output.get('1.0', tk.END)
-            postbote.send('pbuchinger@pm.me', 'BUG REPORT: p5_restore_gui', message)
+            postbote.send('pbuchinger@toolsatwork.com', 'BUG REPORT: p5_restore_gui', message)
             self.destroy()
         else:
             mb.showerror('ERROR', 'Message is empty')
