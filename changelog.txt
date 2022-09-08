@@ -1,0 +1,30 @@
+A04 (08.09.2022):
+================
+- added edl parsing capabilities
+
+A03:
+======
+Misc:
+- changed formatting of log output to be more readable
+
+
+A02 (11.04.2022):
+================
+Bugfixes:
+- fixed a bug where the console would not update during searches
+- fixed a bug where duplicates would be added to restore entries
+Misc:
+- added status bar to main window
+- added ‘Bug Report’ window to quickly send out bug reports
+- added scrollbar to Log Output window
+
+
+A01 (07.04.2022):
+================
+Bugfixes:
+- fixed bug where ‘archive_id’ would not update properly
+- fixed bug where pressing ‘o’ would open ‘Open File’ dialog window
+
+Misc:
+- disabled certain options when no valid configuration file is found
+- added filename to restore job description

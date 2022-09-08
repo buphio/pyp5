@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+if [ $# -lt 2 ]
+then
+    echo -e "$0: error: need filename of python script"
+    exit 1
+fi
+
+NAME="$(basename "$1" .py)"-"$2"
+
+pyinstaller --target-architecture x86_64 -n "$NAME" "$1"
+if [ $? -eq 1 ]; then
+    echo "Compilation failed."
+else
+    mv dist/"$NAME" .
+    rm -rf __pycache__
+    rm -rf build
+    rm -rf dist
+    rm "$NAME".spec
+    chmod 0444 ../changelog.txt
+    zip -r "$NAME".zip "$NAME" ../changelog.txt && rm -rf "$NAME"
+    chmod 0644 ../changelog.txt
+    echo "Done."
+fi

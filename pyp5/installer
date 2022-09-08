@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+if [ $# -lt 1 ]
+then
+    echo -e "$0: error: need filename of python script"
+    exit 1
+fi
+
+pyinstaller --onefile --target-architecture x86_64 "$1"
+if [ $? -eq 1 ]; then
+    echo "Compilation failed."
+else
+    mv dist/"$(basename "$1" .py)" .
+    rm -rf __pycache__
+    rm -rf build
+    rm -rf dist
+    rm "$(basename "$1" .py)".spec
+fi

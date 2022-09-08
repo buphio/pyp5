@@ -1,0 +1,10 @@
+2022-04-06 19:22:11 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-06 19:52:00 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 09:16:14 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 09:19:47 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 19:37:27 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 19:41:19 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 19:49:04 INFO     ['/usr/local/aw/bin/nsdchat', '-s', 'awsock:/admin:admin.@172.100.10.40:9001']
+2022-04-07 19:49:04 CRITICAL [Errno 2] No such file or directory: '/usr/local/aw/bin/nsdchat'
+2022-04-11 09:16:55 INFO     ['/usr/local/aw/bin/nsdchat']
+2022-04-11 16:49:23 INFO     ['/usr/local/aw/bin/nsdchat']
