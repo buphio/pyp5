@@ -84,7 +84,7 @@ def check_p5_connection(nsdchat) -> str:
 def new_restore_selection(nsdchat) -> str:
     """ Creates a new restore selection.
         Returns restore ID on success, empty string on failure. """
-    return check_output(nsdchat + ['-c', 'RestoreSelection', 'create', 'localhost']).decode('utf-8')
+    return check_output(nsdchat + ['-c', 'RestoreSelection', 'create', 'localhost', '/Volumes/RESTORE/Archiware/']).decode('utf-8')
 
 
 def find_entry(nsdchat, restore_selection, archive_id, item) -> str:
@@ -94,7 +94,7 @@ def find_entry(nsdchat, restore_selection, archive_id, item) -> str:
     # return check_output
     # print(nsdchat + ['-c', 'RestoreSelection', restore_selection, 'findentry', archive_id, f'{{name == "{item}"}}'])
     return check_output(nsdchat + ['-c', 'RestoreSelection', restore_selection, 'findentry', archive_id,
-                        f'{{name == "{item}"}}']).decode('utf-8')
+                        f"{{name *= '{item}'}}"]).decode('utf-8')
 
 
 def get_volumes(nsdchat, restore_selection):
@@ -106,6 +106,11 @@ def get_volumes(nsdchat, restore_selection):
 def get_label(nsdchat, volume) -> str:
     """ Returns label of volume on success, empty string on failure. """
     return check_output(nsdchat + ['-c', 'Volume', volume, 'label']).decode('utf-8')
+
+
+def get_barcode(nsdchat, volume) -> str:
+    """ Returns label of volume on success, empty string on failure. """
+    return check_output(nsdchat + ['-c', 'Volume', volume, 'barcode']).decode('utf-8')
 
 
 def submit_restore(nsdchat, restore_selection) -> str:
