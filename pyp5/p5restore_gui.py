@@ -44,7 +44,8 @@ class RestoreGUI(tk.Tk):
         # --- ENTRIES FOUND
         frame_00 = tk.Frame(frame_main)
         frame_00.grid(row=0, column=0, columnspan=4, sticky=tk.NSEW)
-        self.label_entries = tk.Label(frame_00, text='Entries found:', background='green', foreground='white')
+        self.label_entries = tk.Label(
+                frame_00, text='Entries found:', background='green', foreground='white')
         self.label_entries.grid()
 
         frame_10 = tk.Frame(frame_main, background='light blue')
