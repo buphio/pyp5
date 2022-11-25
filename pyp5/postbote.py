@@ -7,10 +7,10 @@ import smtplib
 def send(receiver, subject, content) -> str:
     """ send notifications via mail """
     port = 587  # For starttls
-    smtp = "smtp.world4you.com"
-    sender = "restore@oncore.me"
-    sender_name = "P5 Restore"
-    password = "RmcKJ10cOmQ6"
+    smtp = ""
+    sender = ""
+    sender_name = ""
+    password = ""
 
     msg = EmailMessage()
     msg['From'] = formataddr((f'{sender_name}', f'{sender}'))

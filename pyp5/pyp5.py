@@ -1,5 +1,5 @@
-from curses.ascii import isdigit
-from re import search
+#from curses.ascii import isdigit
+#from re import search
 import aaf2
 from subprocess import check_output
 

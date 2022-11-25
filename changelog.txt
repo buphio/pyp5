@@ -1,3 +1,8 @@
+A05 (14.09.2022):
+================
+- added function to edit list of found entries with double-click
+- changed search to ignore file extensions
+
 A04 (08.09.2022):
 ================
 - added edl parsing capabilities
@@ -10,7 +15,6 @@ A03:
 Misc:
 - changed formatting of log output to be more readable
 
-
 A02 (11.04.2022):
 ================
 Bugfixes:
@@ -20,7 +24,6 @@ Misc:
 - added status bar to main window
 - added ‘Bug Report’ window to quickly send out bug reports
 - added scrollbar to Log Output window
-
 
 A01 (07.04.2022):
 ================

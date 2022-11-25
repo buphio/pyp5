@@ -10,7 +10,7 @@ import pyp5
 import tkinter as tk
 
 
-__version__ = 'A04'
+__version__ = 'A05'
 
 
 def get_time():
@@ -51,9 +51,11 @@ class RestoreGUI(tk.Tk):
         frame_10 = tk.Frame(frame_main, background='light blue')
         frame_10.grid(row=1, column=0, columnspan=4, sticky=tk.NSEW)
         frame_10.grid_columnconfigure(0, weight=1)
+        self.edit_item = None
         self.list_entries = tk.Listbox(frame_10, border=0, width=60, height=20, selectmode='multiple')
         self.list_entries.configure(font=('Andale Mono', 14))
         self.list_entries.grid(column=0, row=0, sticky=tk.W)
+        self.list_entries.bind("<Double-1>", self.start_edit)
         self.scrollbar_list_entries = tk.Scrollbar(frame_10, orient='vertical', command=self.list_entries.yview())
         self.scrollbar_list_entries.grid(column=1, row=0, sticky=tk.NS)
         self.list_entries['yscrollcommand'] = self.scrollbar_list_entries.set
@@ -180,6 +182,31 @@ class RestoreGUI(tk.Tk):
         self.config_print()
 
     # === FUNCTIONS ======================================================================
+    def start_edit(self, event):
+        index = self.list_entries.index(f"@{event.x},{event.y}")
+        self.edit_item = index
+        text = self.list_entries.get(index).strip("\n")
+        y_axis = self.list_entries.bbox(index)[1]
+        self.item_to_edit = tk.Entry(master=self.list_entries, borderwidth=0, highlightthickness=1)
+        self.item_to_edit.bind("<Return>", self.save_edit)
+        self.item_to_edit.bind("<Escape>", self.cancel_edit)
+        self.item_to_edit.insert(0, text)
+        self.item_to_edit.selection_from(0)
+        self.item_to_edit.selection_to("end")
+        self.item_to_edit.place(relx=0, y=y_axis, relwidth=1, width=-1)
+        self.item_to_edit.focus_set()
+        self.item_to_edit.grab_set()
+        # print(f"{index}, {y_axis}: {text}")
+
+    def cancel_edit(self, event):
+        event.widget.destroy()
+
+    def save_edit(self, event):
+        new_data = event.widget.get()
+        self.list_entries.delete(self.edit_item)
+        self.list_entries.insert(self.edit_item, new_data)
+        event.widget.destroy()
+
     def archive_id_changed(self, event):
         self.config_change(self.combobox_archvive_id.get())
 
@@ -258,7 +285,7 @@ class RestoreGUI(tk.Tk):
         self.list_entries.delete(0, tk.END)
         self.text_log_output.delete('1.0', tk.END)
         for item in sorted(list(self.entries)):
-            self.list_entries.insert(tk.END, item + '\n')
+            self.list_entries.insert(tk.END, item.split('.')[0] + '\n')
 
         self.sum_entries = len(self.entries)
 
