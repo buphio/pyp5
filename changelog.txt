@@ -1,3 +1,7 @@
+A06 (09.05.2023):
+================
+- minor reformats and cleanup
+
 A05 (14.09.2022):
 ================
 - added function to edit list of found entries with double-click
