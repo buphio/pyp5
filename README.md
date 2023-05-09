@@ -1,3 +1,3 @@
-# p5_restore
+# P5Restore
 
-Create archiware p5 restore selection from aaf, edl, ale files.
+Create Archiware P5 restore selection from aaf, edl, ale files.
