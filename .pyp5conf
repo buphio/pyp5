@@ -1,0 +1,9 @@
+[GENERAL]
+nsdchat = /usr/local/aw/bin/nsdchat
+awsock = -s awsock:/user:pass@ip:port
+
+[RESTORE]
+archive_id = xxx
+
+[NOTIFICATION]
+email = xxx
