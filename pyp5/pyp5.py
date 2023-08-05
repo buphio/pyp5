@@ -2,6 +2,8 @@
 pyp5
 Module that implements various functions to parse .aaf, .ale and .edl files
 and create and start Archiware P5 restore selections.
+
+Author: Philipp Buchinger <buchinger@proton.me>
 """
 
 from subprocess import check_output

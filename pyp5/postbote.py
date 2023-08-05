@@ -1,5 +1,7 @@
 """
 Simple function for sending mail message.
+
+Author: Philipp Buchinger <buchinger@proton.me>
 """
 
 import ssl

@@ -1,6 +1,8 @@
 """
 pyp5 - GUI
-gui wrapper for pyp5 module.
+GUI wrapper for pyp5 module.
+
+Author: Philipp Buchinger <buchinger@proton.me>
 """
 
 from tkinter import filedialog as fd

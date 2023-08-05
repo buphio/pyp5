@@ -1,6 +1,8 @@
 """
 pyp5 - CLI
-cli wrapper for pyp5 module.
+CLI wrapper for pyp5 module.
+
+Author: Philipp Buchinger <buchinger@proton.me>
 """
 
 import argparse
