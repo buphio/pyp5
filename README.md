@@ -1,4 +1,4 @@
-# pyp5
+# pyp5 (ARCHIVED)
 
 
 > _**DISCLAMIER:** Test project to get a feel for GUI programming in Python.
